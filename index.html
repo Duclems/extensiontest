@@ -1,0 +1,128 @@
+<!DOCTYPE HTML>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Player</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Audio Player</h1>
+        
+        <!-- Permission popup -->
+        <div id="permissionPopup" class="permission-popup">
+            <p class="permission-text">
+                To play audio, your browser needs your permission.
+                Please click "Allow" to continue.
+            </p>
+            <button id="authorizeBtn" class="btn">
+                Allow audio playback
+            </button>
+        </div>
+
+        <!-- Player section -->
+        <div id="playerSection" class="player-section">
+            <button id="playBtn" class="btn play-btn">Play sound
+            </button>
+            <div id="status" class="status"></div>
+        </div>
+    </div>
+    <script src="https://extension-files.twitch.tv/helper/v1/twitch-ext.min.js"></script>
+    <script>
+        // DOM elements
+        const permissionPopup = document.getElementById('permissionPopup');
+        const authorizeBtn = document.getElementById('authorizeBtn');
+        const playerSection = document.getElementById('playerSection');
+        const playBtn = document.getElementById('playBtn');
+        const status = document.getElementById('status');
+
+        // Create audio element
+        const audio = new Audio('sound.mp3');
+        let audioContext = null;
+        let isAuthorized = false;
+
+        // Show permission popup on load
+        window.addEventListener('load', () => {
+            permissionPopup.classList.add('show');
+        });
+
+        // Handler for authorization button
+        authorizeBtn.addEventListener('click', async () => {
+            try {
+                // Create audio context to request permission
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                
+                // Request permission
+                await audioContext.resume();
+                
+                // Test playback to trigger permission
+                audio.volume = 0;
+                await audio.play();
+                audio.pause();
+                audio.currentTime = 0;
+                audio.volume = 1;
+                
+                isAuthorized = true;
+                
+                // Hide popup and show player
+                permissionPopup.classList.remove('show');
+                playerSection.classList.add('show');
+                
+                showStatus('Permission granted! You can now play the sound.', 'success');
+                
+            } catch (error) {
+                console.error('Authorization error:', error);
+                showStatus('Authorization error. Please try again.', 'error');
+            }
+        });
+
+        // Gestionnaire pour le bouton de lecture
+        playBtn.addEventListener('click', async () => {
+            if (!isAuthorized) {
+                showStatus('Veuillez d\'abord autoriser la lecture audio.', 'error');
+                return;
+            }
+
+            try {
+                if (audio.paused) {
+                    await audio.play();
+                    playBtn.innerHTML = 'Pause';
+                    showStatus('Lecture en cours...', 'success');
+                } else {
+                    audio.pause();
+                    playBtn.innerHTML = '<span class="icon">Play</span>Play sound';
+                    showStatus('Lecture en pause', 'success');
+                }
+            } catch (error) {
+                console.error('Erreur lors de la lecture:', error);
+                showStatus('Erreur lors de la lecture du fichier audio.', 'error');
+            }
+        });
+
+        // Gestionnaire pour la fin de lecture
+        audio.addEventListener('ended', () => {
+            playBtn.innerHTML = '<span class="icon">Play</span>Play sound';
+            showStatus('Lecture terminée', 'success');
+        });
+
+        // Fonction pour afficher le statut
+        function showStatus(message, type) {
+            status.textContent = message;
+            status.className = `status ${type}`;
+            
+            // Masquer le statut après 3 secondes
+            setTimeout(() => {
+                status.textContent = '';
+                status.className = 'status';
+            }, 3000);
+        }
+
+        // Gestionnaire pour les erreurs audio
+        audio.addEventListener('error', (e) => {
+            console.error('Erreur audio:', e);
+            showStatus('Erreur: Impossible de charger le fichier audio.', 'error');
+        });
+    </script>
+</body>
+</html>
