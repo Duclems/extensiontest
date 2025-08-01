@@ -31,8 +31,8 @@ body {
 }
 
 .permission-popup {
-    background: #fff5f7;
-    border: 2px solid #ffb6c1;
+    background: #fff8f0;
+    border: 2px solid #ff8902;
     border-radius: 15px;
     padding: 25px;
     margin-bottom: 30px;
@@ -43,14 +43,35 @@ body {
     display: block;
 }
 
+.popup-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.popup-title {
+    color: #ff8902;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.popup-subtitle {
+    color: #ff8902;
+    font-size: 14px;
+    font-weight: 400;
+    margin: 0;
+    opacity: 0.7;
+}
+
 .permission-text {
-    color: #d63384;
+    color: #ff8902;
     margin-bottom: 20px;
     line-height: 1.5;
+    font-size: 16px;
 }
 
 .btn {
-    background: #ff69b4;
+    background: #ff8902;
     color: white;
     border: none;
     padding: 12px 30px;
@@ -62,7 +83,7 @@ body {
 }
 
 .btn:hover {
-    background: #ff1493;
+    background: #e67a00;
 }
 
 .btn:disabled {
@@ -81,7 +102,7 @@ body {
 }
 
 .play-btn {
-    background: #ff69b4;
+    background: #ff8902;
     font-size: 18px;
     padding: 15px 40px;
 }
@@ -108,4 +129,139 @@ body {
 .icon {
     font-size: 16px;
     margin-right: 8px;
+}
+
+/* Styles pour la liste des fichiers audio */
+.audio-list-container {
+    text-align: left;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.audio-list-container h2 {
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 20px;
+}
+
+.keo-speech-container {
+    text-align: center;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.keo-speech-title {
+    color: #ff8902;
+    margin-bottom: 20px;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.loading-message {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    margin: 20px 0;
+}
+
+.audio-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.audio-item {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 10px;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.audio-item:hover {
+    background: #e9ecef;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.audio-item.playing {
+    background: #d4edda;
+    border-color: #28a745;
+}
+
+.audio-item.playing .play-btn {
+    background: #dc3545;
+}
+
+.audio-item.playing .play-btn:hover {
+    background: #c82333;
+}
+
+.audio-info {
+    flex: 1;
+}
+
+.audio-name {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.audio-duration {
+    font-size: 12px;
+    color: #666;
+}
+
+.play-btn {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.play-btn:hover {
+    background: #218838;
+    transform: scale(1.05);
+}
+
+.play-btn.playing {
+    background: #dc3545;
+}
+
+.play-btn.playing:hover {
+    background: #c82333;
+}
+
+.no-files {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    padding: 20px;
+}
+
+.error-message {
+    text-align: center;
+    color: #dc3545;
+    font-weight: 500;
+    padding: 20px;
+}
+
+/* Amélioration du conteneur principal pour la nouvelle interface */
+.container {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 600px;
+    width: 90%;
 } 
